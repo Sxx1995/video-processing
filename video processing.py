@@ -4,21 +4,17 @@ import numpy as np
 video_paths = ["video1.mp4", "video2.mp4", "video3.mp4", "video4.mp4"]
 caps = [cv2.VideoCapture(v) for v in video_paths]
 
-# 获取视频参数
 frame_width = int(caps[0].get(cv2.CAP_PROP_FRAME_WIDTH))
 frame_height = int(caps[0].get(cv2.CAP_PROP_FRAME_HEIGHT))
 fps = int(caps[0].get(cv2.CAP_PROP_FPS))
 output_size = (frame_width * 2, frame_height * 2)
 
-# 创建输出视频
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
 out = cv2.VideoWriter("output_2x2_annotated.mp4", fourcc, fps, output_size)
 
 def annotate_frame(frame, index):
-    # 添加黑底小矩形
     overlay_size = 40
     cv2.rectangle(frame, (0, 0), (overlay_size, overlay_size), (0, 0, 0), -1)
-    # 添加红色编号（1-indexed）
     font = cv2.FONT_HERSHEY_SIMPLEX
     font_scale = 1
     thickness = 2
@@ -53,7 +49,7 @@ while True:
 
     out.write(combined_frame)
 
-# 清理资源
+
 for cap in caps:
     cap.release()
 out.release()
